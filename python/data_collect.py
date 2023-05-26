@@ -24,23 +24,19 @@ def draw_landmarks(image, results):
 
 
 def draw_styled_landmarks(image, results):
-    # Draw face connections
     mp_drawing.draw_landmarks(image, results.face_landmarks, mp_holistic.FACEMESH_CONTOURS,
                               mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=1, circle_radius=1),
                               mp_drawing.DrawingSpec(color=(255, 255, 0), thickness=1, circle_radius=1)
                               )
-    # Draw pose connections
     mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(0, 0, 255), thickness=2, circle_radius=4),
                               mp_drawing.DrawingSpec(color=(255, 255, 0), thickness=2, circle_radius=2)
                               )
-    # Draw left hand connections
     mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(255, 0, 255), thickness=3, circle_radius=3),
                               mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3),
                               # mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3)
                               )
-    # Draw right hand connections
     mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(0, 128, 128), thickness=3, circle_radius=3),
                               mp_drawing.DrawingSpec(color=(128, 0, 128), thickness=3, circle_radius=3)
