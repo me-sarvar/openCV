@@ -3,7 +3,6 @@ import cv2
 import numpy as np
 import mediapipe as mp
 
-
 mp_holistic = mp.solutions.holistic
 mp_drawing = mp.solutions.drawing_utils
 
@@ -38,25 +37,30 @@ def draw_styled_landmarks(image, results):
     # Draw left hand connections
     mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(255, 0, 255), thickness=3, circle_radius=3),
-                              mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3)
+                              mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3),
+                              # mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3)
                               )
     # Draw right hand connections
     mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(0, 128, 128), thickness=3, circle_radius=3),
                               mp_drawing.DrawingSpec(color=(128, 0, 128), thickness=3, circle_radius=3)
                               )
-    
+
 
 def extract_keypoints(results):
-    pose = np.array([[res.x, res.y, res.z, res.visibility] for res in results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(132)
-    face = np.array([[res.x, res.y, res.z] for res in results.face_landmarks.landmark]).flatten() if results.face_landmarks else np.zeros(1404)
-    lh = np.array([[res.x, res.y, res.z] for res in results.left_hand_landmarks.landmark]).flatten() if results.left_hand_landmarks else np.zeros(63)
-    rh = np.array([[res.x, res.y, res.z] for res in results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(63)
+    pose = np.array([[res.x, res.y, res.z, res.visibility] for res in
+                     results.pose_landmarks.landmark]).flatten() if results.pose_landmarks else np.zeros(132)
+    face = np.array([[res.x, res.y, res.z] for res in
+                     results.face_landmarks.landmark]).flatten() if results.face_landmarks else np.zeros(1404)
+    lh = np.array([[res.x, res.y, res.z] for res in
+                   results.left_hand_landmarks.landmark]).flatten() if results.left_hand_landmarks else np.zeros(63)
+    rh = np.array([[res.x, res.y, res.z] for res in
+                   results.right_hand_landmarks.landmark]).flatten() if results.right_hand_landmarks else np.zeros(63)
     return np.concatenate([pose, face, lh, rh])
 
 
-DATA_SET_PATH = os.path.join('data_set')
-actions = np.array(['hello', 'thanks', 'iloveyou'])
+DATA_SET_PATH = os.path.join('../data_set')
+actions = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat', 'Qayerda', 'Xayr', 'Agar', 'Assalomu alaykum', 'Qayerga', 'Ortiqcha', 'Ortasida', 'Mening', 'Mumkin', 'Uchrashmoq'])
 no_sequences = 50
 sequence_length = 30
 
