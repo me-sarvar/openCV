@@ -55,7 +55,7 @@ def extract_keypoints(results):
     return np.concatenate([pose, face, lh, rh])
 
 
-DATA_SET_PATH = os.path.join('../data_set')
+DATA_SET_PATH = os.path.join('data_set')
 actions = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat', 'Qayerda', 'Xayr', 'Agar', 'Assalomu alaykum', 'Qayerga', 'Ortiqcha', 'Ortasida', 'Mening', 'Mumkin', 'Uchrashmoq'])
 no_sequences = 50
 sequence_length = 30
