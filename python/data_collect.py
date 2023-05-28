@@ -34,8 +34,7 @@ def draw_styled_landmarks(image, results):
                               )
     mp_drawing.draw_landmarks(image, results.left_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(255, 0, 255), thickness=3, circle_radius=3),
-                              mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3),
-                              # mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3)
+                              mp_drawing.DrawingSpec(color=(0, 255, 255), thickness=3, circle_radius=3),                             
                               )
     mp_drawing.draw_landmarks(image, results.right_hand_landmarks, mp_holistic.HAND_CONNECTIONS,
                               mp_drawing.DrawingSpec(color=(0, 128, 128), thickness=3, circle_radius=3),
@@ -69,7 +68,7 @@ for action in actions:
 
 
 def get_data():
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         while cap.isOpened():
             ret, frame = cap.read()
