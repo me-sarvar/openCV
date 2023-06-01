@@ -55,8 +55,8 @@ def extract_keypoints(results):
 
 
 DATA_SET_PATH = os.path.join('data_set')
-actions = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat', 'Qayerda', 'Xayr', 'Agar', 'Assalomu alaykum', 'Qayerga', 'Ortiqcha', 'Ortasida', 'Mening', 'Mumkin', 'Uchrashmoq'])
-no_sequences = 50
+actions = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat'])
+no_sequences = 30
 sequence_length = 30
 
 for action in actions:
