@@ -1,2 +1,5 @@
 venv
 data_set/
+logs/
+models/
+results/

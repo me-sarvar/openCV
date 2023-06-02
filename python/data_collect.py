@@ -55,14 +55,14 @@ def extract_keypoints(results):
 
 
 DATA_SET_PATH = os.path.join('data_set')
-actions = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat'])
+words = np.array(['Rahmat', 'Togri', 'Birgalikda', 'Hamma', 'Faqat'])
 no_sequences = 30
 sequence_length = 30
 
-for action in actions:
+for word in words:
     for sequence in range(no_sequences):
         try:
-            os.makedirs(os.path.join(DATA_SET_PATH, action, str(sequence)))
+            os.makedirs(os.path.join(DATA_SET_PATH, word, str(sequence)))
         except:
             pass
 
@@ -70,14 +70,31 @@ for action in actions:
 def get_data():
     cap = cv2.VideoCapture(0)
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
-        while cap.isOpened():
-            ret, frame = cap.read()
-            image, results = mediapipe_detection(frame, holistic)
-            print(results)
-            draw_styled_landmarks(image, results)
-            if cv2.waitKey(10) & 0xFF == ord('q'):
-                break
-            cv2.imshow('Data Collection', image)
+        for word in words:     
+            for sequence in range(no_sequences):            
+                for frame_num in range(sequence_length):
+                    ret, frame = cap.read()
+                    frame = cv2.flip(frame, 1)
+                    image, results = mediapipe_detection(frame, holistic)
+                    draw_styled_landmarks(image, results)
+                    if frame_num == 0:
+                        cv2.waitKey(3000)
+                        cv2.putText(image, '{} {}'.format(word, sequence), (15, 20),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255, 0, 0), 4, cv2.LINE_AA)
+                        cv2.imshow('Data Collection', image)
+                        cv2.waitKey(3000)
+                    else:
+                        cv2.imshow('Data Collection', image)
+                    if frame_num == sequence_length - 1:
+                        cv2.putText(image, '{} {}'.format(word, sequence), (15, 20),
+                                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 4, cv2.LINE_AA)
+                        cv2.imshow('Data Collection', image)
+                        cv2.waitKey(3000)
+                    keypoints = extract_keypoints(results)
+                    npy_path = os.path.join(DATA_SET_PATH, word, str(sequence), str(frame_num))
+                    np.save(npy_path, keypoints)
+                    if cv2.waitKey(10) & 0xFF == ord('q'):
+                        break
     cap.release()
     cv2.destroyAllWindows()
 
